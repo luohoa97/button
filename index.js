@@ -15,6 +15,7 @@ const regularFart = newFart("fart-83471-fixed-regular.flac");
 const critFart    = newFart("fart-4-228244-fixed-crit.flac");
 const bigoneFart  = newFart("fart-paulstretched.flac");
 const evilFart    = newFart("fart-paulstretched-evil.flac");
+const niceFart    = newFart("nice.webm"); // todo: convert from webm to flac or whatever
 
 function randomPlaybackRate(min = 0.97, max = 1.03) {
     return Math.random() * (max - min) + min;
@@ -131,10 +132,12 @@ const eventsTable = [
     {
         onCount: 69,
         action: () => {
-            // TODO: add this sound here https://www.youtube.com/watch?v=3WAOxKOmR90
             clickMe.disabled = true;
             clickMeText.innerText = `Nice!`;
-            playFart(critFart);
+            niceFart.onended = () => playFart(critFart, true); // okay some hack i put together after the audio glitched.
+            playFart(niceFart, true);
+            clickMeText.innerText = `Oh, you expected something else?`;
+            clickMeText.innerText = `okay heres another fart:)`;
         }
     },
     {
