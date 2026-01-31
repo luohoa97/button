@@ -141,22 +141,24 @@ const eventsTable = [
         action: regularAction,
     },
     {
-        onCount: 69,
-        action: () => {
-            clickMe.disabled = true;
-            clickMeText.innerText = `Nice!`;
-            niceFart.onended = () => {
-                clickMeText.innerText = "Oh, you expected something else?"; // some other hack to stop the glitching text
-                setTimeout(() => {
-                    clickMeText.innerText = "okay heres another fart:)";
-                    playFart(critFart, true);
-                }, 1500);
-            };
-            playFart(niceFart, true);
-            clickMeText.innerText = `Oh, you expected something else?`;
-            clickMeText.innerText = `okay heres another fart:)`;
-        }
-    },
+    onCount: 69,
+    action: () => {
+        clickMe.disabled = true;
+
+        clickMeText.innerText = "Nice.";
+        playFart(niceFart, true);
+
+        setTimeout(() => {
+            clickMeText.innerText = "Oh, you expected something else?";
+
+            setTimeout(() => {
+                clickMeText.innerText = "okay heres another fart :)";
+                playFart(critFart, true);
+                clickMe.disabled = false;
+            }, 1500);
+
+        }, 1200);
+    }},
     {
         onCount: 70,
         action: regularAction,
