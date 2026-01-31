@@ -37,6 +37,17 @@ const regularAction = () => {
     playFart(regularFart, true);
 }
 
+function gasLeakLoop() {
+    if (!gasLeakActive) return;
+
+    const delay = Math.random() * 3000 + 2000; // ima randomly fart every 2-5 seconds and you cant stop me :evil:
+    gasLeakTimeout = setTimeout(() => {
+        playFart(regularFart, true);
+        gasLeakLoop();
+    }, delay);
+}
+
+
 const thatsItForNow = () => {
     clickMeText.innerHTML = `That's it for now!`;
     playFart(regularFart, true);
@@ -134,7 +145,13 @@ const eventsTable = [
         action: () => {
             clickMe.disabled = true;
             clickMeText.innerText = `Nice!`;
-            niceFart.onended = () => playFart(critFart, true); // okay some hack i put together after the audio glitched.
+            niceFart.onended = () => {
+                clickMeText.innerText = "Oh, you expected something else?"; // some other hack to stop the glitching text
+                setTimeout(() => {
+                    clickMeText.innerText = "okay heres another fart:)";
+                    playFart(critFart, true);
+                }, 1500);
+            };
             playFart(niceFart, true);
             clickMeText.innerText = `Oh, you expected something else?`;
             clickMeText.innerText = `okay heres another fart:)`;
@@ -187,6 +204,31 @@ const eventsTable = [
         action: regularAction,
     },
     {
+    onCount: 150,
+    action: () => {
+        clickMeText.innerText = "STOP TRYING TO TOUCH ME";
+        clickMe.classList.add("evadeCursor");
+        playFart(critFart, true);
+    }},
+    {
+    onCount: 200,
+    action: () => {
+        clickMe.disabled = true;
+        clickMeText.innerText = ```error: undefined, attempted to access undefined property "regularFart"```;
+        setTimeout(() => {
+            playFart(regularFart, true);
+            clickMeText.innerText = "jk lol ur quite gullible actually";
+            clickMe.disabled = false;
+        }, 3000);
+    }},
+    {
+    onCount: 250,
+    action: () => {
+        gasLeakActive = true;
+        clickMeText.innerText = "uh oh... do you smell that?";
+        gasLeakLoop();
+    }}
+    {
         onCount: 666,
         action: () => {
             clickMe.disabled = true;
@@ -224,6 +266,8 @@ function fireEvents() {
 
 let shaking = false;
 let counter = 0;               // TODO: DONT FORGET TO SET TO 0 ON RELEASE!!!
+let gasLeakActive = false;
+let gasLeakTimeout = null;
 
 // TODO: change it to onmousedown (it stopped working after separating button and label)
 clickMe.onclick = () => {
