@@ -214,8 +214,8 @@ const eventsTable = [
     onCount: 200,
     action: () => {
         clickMe.disabled = true;
-        clickMeText.innerText = ```error: undefined, attempted to access undefined property "regularFart"```;
-        setTimeout(() => {
+        clickMeText.innerText = `error: undefined, attempted to access undefined property "regularFart"`;
+            setTimeout(() => {
             playFart(regularFart, true);
             clickMeText.innerText = "jk lol ur quite gullible actually";
             clickMe.disabled = false;
@@ -227,7 +227,7 @@ const eventsTable = [
         gasLeakActive = true;
         clickMeText.innerText = "uh oh... do you smell that?";
         gasLeakLoop();
-    }}
+    }},
     {
         onCount: 666,
         action: () => {
@@ -273,24 +273,42 @@ let gasLeakTimeout = null;
 clickMe.onclick = () => {
     counter += 1;
     popupText.innerText = counter + "🍑💨";
+
+    if (gasLeakActive) {
+        gasLeakActive = false;
+        clearTimeout(gasLeakTimeout);
+        gasLeakTimeout = null;
+        clickMeText.innerText = "oh thank god you fixed it";
+    }
+
     fireEvents();
 };
 
+
 let prevTimestamp = 0;
+
 function frame(timestamp) {
-    const deltaTime = (timestamp - prevTimestamp)/1000;
+    const deltaTime = (timestamp - prevTimestamp) / 1000;
     prevTimestamp = timestamp;
-    if (shaking) {
-        const x = Math.random()*2 - 1 + 50;
-        const y = Math.random()*2 - 1 + 50;
+
+    if (gasLeakActive) {
+        const x = Math.random() * 30 + 35;
+        const y = Math.random() * 30 + 35;
+        clickMe.style.left = `${x}%`;
+        clickMe.style.top  = `${y}%`;
+    } else if (shaking) {
+        const x = Math.random() * 2 - 1 + 50;
+        const y = Math.random() * 2 - 1 + 50;
         clickMe.style.left = `${x}%`;
         clickMe.style.top  = `${y}%`;
     } else {
         clickMe.style.left = "50%";
         clickMe.style.top  = "50%";
     }
+
     window.requestAnimationFrame(frame);
 }
+
 window.requestAnimationFrame((timestamp) => {
     prevTimestamp = timestamp;
     window.requestAnimationFrame(frame);
