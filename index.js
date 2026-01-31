@@ -184,6 +184,21 @@ const eventsTable = [
         action: regularAction,
     },
     {
+        onCount 180,
+        action: () => {
+            clickMe.disabled = true;
+
+            clickMeText.innerText = "watch me do a barrell roll!!!";
+            clickMeText.classList.add("rotateText");
+
+            playFart(critFart, true);
+            setTimeout(() => {
+                clickMeText.classList.remove("rotateText");
+                clickMe.disabled = false;
+            }, 600);
+        }
+    },
+    {
         onCount: 666,
         action: () => {
             clickMe.disabled = true;
