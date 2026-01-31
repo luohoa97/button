@@ -259,8 +259,9 @@ eventsTable.sort((a, b) => b.onCount - a.onCount);
 
 function fireEvents() {
     for (const event of eventsTable) {
-        if (event.onCount <= counter) {
+        if (!event.fired && event.onCount <= counter) {
             event.action();
+            event.fired = true;
             break;
         }
     }
